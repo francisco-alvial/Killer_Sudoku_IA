@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1544053190 source:c:\users\franciscoalvial\desktop\killer sudoku\killersudoku\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
