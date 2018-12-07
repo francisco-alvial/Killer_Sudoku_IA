@@ -59,11 +59,28 @@ struct Puzzle_base
   }
 };
 
+/*int sector[9][9] ={
+
+    { 1, 1, 2, 2, 2, 3, 4, 4, 5 },
+    { 6, 7, 8, 8, 3, 3, 9, 9, 5 },
+    { 6, 7, 7, 10, 11, 12, 13, 14, 14 },
+    { 15, 16, 16, 10, 11, 12, 13, 14, 14 },
+    { 15, 17, 16, 19, 11, 20, 20, 21, 22 },
+    { 23, 17, 18, 19, 24, 24, 25, 21, 22 },
+    { 23, 17, 26, 27, 28, 29, 25, 25, 30 },
+    { 31, 31, 26, 27, 28, 29, 25, 25, 30 },
+    { 31, 31, 27, 27, 32, 32, 33, 33, 33 },
+};
+
+int Suma[33] = {14,13,20,12,10,9,12,9,5,7,18,9,12,19,5,14,18,5,15,4,14,8,8,6,28,11,18,3,13,16,27,13,10};*/
+
 int fallas_global;
 
 
 int check(const Puzzle &puzzle)
 {
+     /* int suma_select = 0;
+    int suma_valor = 0;*/
  int Numero_de_fallas = 0;
   for (int i = 0; i < 9; ++i){
     for (int j = 0; j < 9; ++j){
@@ -80,57 +97,25 @@ int check(const Puzzle &puzzle)
       }
     }
   }
+     /* while(suma_select != 33){
+        suma_valor = 0;
+        for (int i = 0; i < 9; ++i){
+            for (int j = 0; j < 9; ++j){
+                if (puzzle.data[i][j] != _ && sector[i][j] == (suma_select+1) ){
+                    suma_valor = suma_valor + puzzle.data[i][j];
+                    std::cout << suma_valor << " valor ";
+                }
+            }
+        }
+        if (suma_valor > Suma[suma_select]){
+
+             Numero_de_fallas = Numero_de_fallas + 1;
+        }
+        suma_select= suma_select + 1;
+    }*/
   return Numero_de_fallas;
 }
 
-bool findSolution(Puzzle &puzzle)
-{
-  int x = -1;
-  int y = -1;
-  int min = 10;
-  for (int i = 0; i < 9; ++i){
-    for (int j = 0; j < 9; ++j)
-    {
-      if (puzzle.data[i][j] == _)
-      {
-        int c = 0;
-        for (int k = 1; k <= 9; ++k)
-        {
-          puzzle.data[i][j] = k;
-          if (check(puzzle))
-            ++c;
-          puzzle.data[i][j] = _;
-        }
-        if (min > c)
-        {
-          min = c;
-          x = i;
-          y = j;
-        }
-      }
-    }
-  }
-    for (int i = 0; i < 9; ++i)
-    {
-      for (int j = 0; j < 9; ++j)
-        std::cout << puzzle.data[i][j] << " ";
-      std::cout << std::endl;
-    }
-    std::cout << std::endl;
-  if (x == -1)
-    return true;
-  for (int k = 1; k <= 9; ++k)
-  {
-    puzzle.data[x][y] = k;
-
-    if (check(puzzle))
-      if (findSolution(puzzle))
-
-        return true;
-  }
-  puzzle.data[x][y] = _;
-  return false;
-}
 
 int main()
 {
