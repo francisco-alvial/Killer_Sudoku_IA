@@ -5,6 +5,7 @@
 #include <time.h>       /* time */
 #include <fstream>
 #include <string.h>
+#include <ctime>
 
 enum { _ = -1 };
 using namespace std; 
@@ -59,7 +60,9 @@ int check(int puzzle[9][9])
 int main()
 {
 
-      char cadena[128];
+   char cadena[128];
+   unsigned t0, t1;
+   double time;
    char name[256];
    cout << "Ingresa nombre del archivo: ";
    cin.getline (name,256);
@@ -69,6 +72,8 @@ int main()
    int Largo_Lista_Tabu;
    cout << "\n" << "ingresa un tamaño de la lista tabu: ";
    cin >> Largo_Lista_Tabu;
+   
+   t0=clock();
    
    ifstream fe(direccion);
    int i = 0;
@@ -178,19 +183,14 @@ int main()
 
     }
     
-         for (int i = 0; i < 9; ++i)
-    {
-      for (int j = 0; j < 9; ++j)
-        std::cout <<  puzzle_mejor_sol[i][j] << " ";
-      std::cout << std::endl;
-    }
-    std::cout << std::endl;
+
     
   fallas_mejor_sol = check(puzzle);
   Mejores_fallas_por_iteracion = 10000;
   
-  while (fallas_mejor_sol != 0){
-
+  while ( (fallas_mejor_sol != 0) && (time<=300.0) ){
+	t1=clock();
+	time = (double(t1-t0)/CLOCKS_PER_SEC);
     for (int i = 0; i < 9; ++i){
         for (int j = 0; j < 9; ++j)
         {
@@ -243,9 +243,7 @@ int main()
             }
         }
     }
-    std::cout << "i: " << guardar_i << " j: "<< guardar_j << " k: " << guardar_k << "\n";
-    std::cout << "MEJOR ITERACION: " << Mejores_fallas_por_iteracion << "\n";
-    std::cout << "MEJOR FALLA: " << fallas_mejor_sol << "\n";
+
     
     puzzle[guardar_i][guardar_j] = guardar_k;
     
@@ -273,10 +271,20 @@ int main()
 
   }
   
+  	t1=clock();
+  	
+  	time = (double(t1-t0)/CLOCKS_PER_SEC);
+	
+  
+  	std::cout << "Cantidad de fallas:" << fallas_mejor_sol << "\n" ;
+  	cout << "Tiempo de ejecucon: " << time << "\n" << endl;
+
+
+  
      for (int i = 0; i < 9; ++i)
     {
       for (int j = 0; j < 9; ++j)
-        std::cout <<  puzzle_mejor_sol[i][j] << " ";
+        std::cout <<  puzzle_mejor_sol[i][j] << "C"<< sectores[i][j] << " ";
       std::cout << std::endl;
     }
     std::cout << std::endl;
